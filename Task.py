@@ -22,6 +22,26 @@ class Task:
         date_string : str
             Дата у форматі "ДД.ММ.РРРР".
 
+        description : str
+            Опис завдання (макс. 255 символів).
+
+        priority : int
+            Пріоритет завдання (від 1 до 5).
+
+        Повертає:
+        ---------
+        bool
+            `True`, якщо всі перевірки пройдені успішно, і `False` в іншому випадку.
+        """
+
+        return (
+                cls.__validate_date(date_string)
+                and cls.__validate_description(description)
+                and cls.__validate_priority(priority)
+                and cls.__validate_status(status)
+        )
+
+    #Перевірка коректності введення дати
     @staticmethod
     def __validate_date(date_string):
         if type(date_string) is not str:
