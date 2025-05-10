@@ -1,4 +1,5 @@
-from datetime import date
+from datetime import date, datetime
+
 
 class Task:
     def __init__(self, title, description, priority, end_date, status="Не виконано"):
