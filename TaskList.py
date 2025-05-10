@@ -147,8 +147,16 @@ class TaskList:
                     task.set_description(new_description)
                 if new_date is not None:
                     task.set_end_date(new_date)
-                if new_priority is not None:
-                    task.set_priority(new_priority)
+                if new_priority:
+                    if new_priority.isdigit():
+                        new_priority_val = int(new_priority)
+                        if 1 <= new_priority_val <= 5:
+                            task.set_priority(new_priority_val)
+                        else:
+                            print("Пріоритет має бути від 1 до 5. Значення не змінено.")
+                    else:
+                        print("Пріоритет повинен бути числом. Значення не змінено.")
+
                 print(f"Завдання '{title}' оновлено.")
                 return
 
