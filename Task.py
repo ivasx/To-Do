@@ -1,16 +1,15 @@
 from datetime import date
 
 class Task:
-    def __init__(self, title, description, priority, end_date, status):
-        date_validation = self.__validate_date(end_date)
-        description_validation = self.__validate_description(description)
-        priority_validation = self.__validate_priority(priority)
-        if type(priority) is int:
-            priorities = Task.__get_priorities()
-            if priority in priorities:
-                priority = priorities[int(priority)]
-            else:
-                priority = 0
+    def __init__(self, title, description, priority, end_date, status="Не виконано"):
+        if not self.validate(end_date, description, priority, status):
+            raise ValueError("Завдання не створено.")
+
+        self.__title = title
+        self.__description = description
+        self.__priority = priority
+        self.__end_date = datetime.strptime(end_date, "%d.%m.%Y").date()
+        self.__status = status
 
         if description_validation == description and date_validation == end_date and priority_validation == priority:
             self.title = title
