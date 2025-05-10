@@ -1,6 +1,5 @@
 from TaskManager import TaskManager
 from Task import Task
-from datetime import datetime
 
 def main():
     task_manager = TaskManager()
