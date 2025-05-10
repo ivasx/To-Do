@@ -12,20 +12,10 @@ class Task:
         self.__end_date = datetime.strptime(end_date, "%d.%m.%Y").date()
         self.__status = status
 
-        if description_validation == description and date_validation == end_date and priority_validation == priority:
-            self.title = title
-            self.description = description
-            self.priority = priority_validation
-            self.end_date = end_date
-            self.status = status
-        else:
-            print("Завдання не створено.")
-            if description_validation != description:
-                print(description_validation)
-            if date_validation != end_date:
-                print(date_validation)
-            if priority_validation != priority:
-                print(priority_validation)
+    @classmethod
+    def validate(cls, date_string, description, priority, status="Не виконано"):
+        """
+        Перевіряє коректність введених даних для завдання (дату, опис, пріоритет).
 
 
     @staticmethod
