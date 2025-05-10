@@ -92,6 +92,68 @@ class TaskList:
         for task in tasks_to_display:
             task.display()
 
+    def filter_tasks(self, filter_by=None, filter_value=None):
+        """
+        Виводить завдання, що відповідають заданому критерію фільтрації.
+
+        Метод дозволяє фільтрувати завдання за статусом або пріоритетом.
+        Якщо вказано неправильний параметр фільтрації, виводиться повідомлення про помилку.
+
+        Параметри:
+        filter_by : str або None
+            Критерій фільтрації ('status' або 'priority').
+        filter_value : str або int або None
+            Значення, за яким здійснюється фільтрація:
+            - для 'status' — рядок (наприклад, "Виконано"),
+            - для 'priority' — ціле число (наприклад, 3).
+
+        Приклад використання:
+        filter_tasks("status", "Виконано")
+        filter_tasks("priority", 2)
+        """
+
+        match filter_by:
+            case "status":
+                print(f"Завдання відфільтровані за статусом {filter_value}:")
+                for task in self.__tasks:
+                    if task.get_status() == filter_value:
+                        task.display()
+            case "priority":
+                print(f"Завдання відфільтровані за пріоритетом {filter_value}:")
+                for task in self.__tasks:
+                    if task.get_priority() == filter_value:
+                        task.display()
+            case _:
+                print("Введено неправильний параметр для фільтрації.")
+
+    def change_task(self, title, new_description=None, new_date=None, new_priority=None):
+        """
+        Оновлює інформацію про завдання за назвою.
+
+        Параметри:
+        title : str
+            Назва завдання, яке потрібно оновити.
+        new_description : str або None
+            Новий опис завдання.
+        new_date : str або None
+            Нова дата завершення (у форматі ДД.ММ.РРРР).
+        new_priority : int або None
+            Новий пріоритет (ціле число).
+        """
+
+        for task in self.__tasks:
+            if task.get_title() == title:
+                if new_description is not None:
+                    task.set_description(new_description)
+                if new_date is not None:
+                    task.set_end_date(new_date)
+                if new_priority is not None:
+                    task.set_priority(new_priority)
+                print(f"Завдання '{title}' оновлено.")
+                return
+
+        print(f"Завдання з назвою '{title}' не знайдено.")
+
     @staticmethod
     def __get_end_date(task_obj):
         return task_obj.get_end_date()
@@ -100,12 +162,20 @@ class TaskList:
     def __get_priority(task_obj):
         return task_obj.get_priority()
 
-if __name__ == '__main__':
-    task1 = Task("Завдання 1", "Опис завдання 1", 4, "01.01.2025")
-    task2 = Task("Завдання 2", "Опис завдання 2", 3, "12.12.2025")
+    def get_task_by_title(self, task_title):
+        """
+        Повертає завдання за його назвою.
 
-    task_list = TaskList()
-    task_list.add_task(task1)
-    task_list.add_task(task2)
+        Параметри:
+        task_title : str
+            Назва завдання, яке потрібно знайти.
 
-    task_list.view_tasks("priority")
+        Повертає:
+        Task або None
+            Завдання, якщо знайдено, або None, якщо не знайдено.
+        """
+        for task in self.__tasks:
+            if task.get_title() == task_title:
+                return task
+        return None
+

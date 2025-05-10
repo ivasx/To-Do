@@ -178,6 +178,7 @@ class Task:
 
     def display(self):
         print(f"Завдання: {self.get_title()}, Дата завершення: {self.get_end_date()}, Пріоритет: {self.get_priority()}")
+
     # Геттери і сеттери
     def get_title(self):
         return self.__title
@@ -213,12 +214,3 @@ class Task:
     def set_status(self, status):
         if self.__validate_status(status):
             self.__status = status
-
-
-
-
-
-if __name__ == '__main__':
-    task = Task("Лалал", "Опа", 4,"11.11.2025")
-    print(task)
-    print(task.validate("11.11.2025", "Опа", 4))
